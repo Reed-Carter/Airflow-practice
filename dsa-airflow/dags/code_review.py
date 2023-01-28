@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime
+from datetime import timedelta
 import random
 
 # The DAG object; we'll need this to instantiate a DAG
@@ -34,42 +34,47 @@ with DAG(
     description='A DAG using a sequence of toy actions to practice using Airflow"', # a description of our DAG
     default_args=default_args, # pass in the default args.
 ) as dag:
-
+    #prints Reed to code_review.txt file
     Name_task = BashOperator(
         task_id='print_Reed',
         bash_command='echo Reed > code_review.txt'
     )
 
+    #prints "Hows it goin, Reed"
     greeting_task = PythonOperator(
         task_id="greeting",
         python_callable=print_hello
     )
-
+    #prints "picking three random apples" in the logs on airflow
     echo_task = BashOperator(
         task_id='echo_task',
         bash_command='echo "picking three random apples"'
     )
-
+    
+    #selects a random apple from the list of apples
     select_task1 = PythonOperator(
         task_id="select_task1",
         python_callable=select_random
     )
 
+    #selects a random apple from the list of apples
     select_task2 = PythonOperator(
         task_id="select_task2",
         python_callable=select_random
     )
 
+    #selects a random apple from the list of apples
     select_task3 = PythonOperator(
         task_id="select_task3",
         python_callable=select_random
     )
     
+    #does nothing, but connects the previous three nodes of the DAG
     dummy_task = DummyOperator(
         task_id='dummy'
     )
 
 
 
-    # set the task order
+    #the order of the tasks in the DAG. Tasks within '[]'s happen simultaneously
     Name_task >> greeting_task >> echo_task >> [select_task1, select_task2, select_task3] >> dummy_task

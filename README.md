@@ -2,7 +2,7 @@
 
 #### By [Reed Carter](https://github.com/Reed-Carter)
 
-#### This repo is a code review to demonstrate a basic understanding of Airflow. It uses airflow to orchestrate events in order to complete a simple dummy task 
+#### This repo is a code review to demonstrate a basic understanding of Airflow. It uses airflow to orchestrate events in order to complete simple dummy tasks 
 
 <br>
 
@@ -12,51 +12,47 @@
 * Pandas
 * Git
 * Markdown
-* JSON
-* NumPy
-* `.gitignore`
-* `requirements.txt`
   
 </br>
 
 ## Description
 
-This repo demonstrates an automated process using Arflow
+This repo demonstrates an automated process using Arflow. A DAG was created to represent the toy tasks that were created to run which can be seen below. 
+
+[<img src="images/Code-Review-DAG.png">](images/Code-Review-DAG.png)
 
 
 ## Setup/Installation Requirements
 
-* Go to https://github.com/Reed-Carter/Emissions-by-Country.git to find the specific repository for this website.
-* Then open your terminal. I recommend going to your Desktop directory:
-    ```bash
-    cd Desktop
-    ```
+* Go to https://github.com/Reed-Carter/Airflow-practice.git to find the specific repository for this website.
+
 * Then clone the repository by inputting: 
   ```bash
-  git clone https://github.com/Reed-Carter/Emissions-by-Country.git
+  git clone https://github.com/Reed-Carter/Airflow-practice.git
   ```
-* Go to the new directory or open the directory folder on your desktop:
+* Go into the new directory:
   ```bash
-  cd Emissions-by_Country
+  cd Airflow-Practice
   ```
-* Once in the directory you will need to set up a virtual environment in your terminal:
+* Once in the directory run the setup file in order to create a virtual environment, install airflow on the virtual environment, and install all required dependencies using the command:
   ```bash
-  python3.7 -m venv venv
+  ./setup.sh
   ```
-* Then activate the environment:
+* Since the required directories are already in place, set your user id as the $AIRFLOW_UID in a .env file:
   ```bash
-  source venv/bin/activate
+  echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
   ```
-* Install the necessary items with requirements.txt:
+* Now airflow can be initializaed with:
   ```bash
-    pip install -r requirements.txt
+  docker-compose up airflow-init
   ```
-* Download the necessary csv files listed in the Datasets Used section
-* With your virtual environment now enabled with proper requirements, open the directory:
+* if you run `docker ps -a` you should see running containers
+* Now the remaining containers can be started using:
   ```bash
-  code .
+  docker-compose up
   ```
-* Upon launch please update the Google Cloud client and project details to configure it to load to your project
+* Leave this running, and open a new terminal tab to use the command line.
+* Navigate to http://0.0.0.0:8080/home in your browser and loging as the default user `airflow` with the password also `airflow`. 
 
 </br>
 

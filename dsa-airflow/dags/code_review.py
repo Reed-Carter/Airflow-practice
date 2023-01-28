@@ -11,10 +11,10 @@ from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago # handy scheduling tool
 
 def print_hello():
-    #with open('/opt/airflow/dags/code_review.txt') as f:
-    with open('./dsa-airflow/dags/code_review.txt') as f:
-        file = f.read()
-        return (f"Hows it goin, {file}?")   
+    with open('/opt/airflow/dags/code_review.txt') as f:
+    #with open('./dsa-airflow/dags/code_review.txt') as f:
+        text = f.read()
+        return (f"Hows it goin, {text}?")   
 
 APPLES = ["pink lady", "jazz", "orange pippin", "granny smith", "red delicious", "gala", "honeycrisp", "mcintosh", "fuji"]
 
@@ -39,27 +39,32 @@ with DAG(
         task_id='print_Reed',
         bash_command='echo Reed > code_review.txt'
     )
+
     greeting_task = PythonOperator(
         task_id="greeting",
-        python_callable=print_hello()
+        python_callable=print_hello
     )
 
     echo_task = BashOperator(
         task_id='echo_task',
         bash_command='echo "picking three random apples"'
     )
+
     select_task1 = PythonOperator(
         task_id="select_task1",
-        python_callable=select_random()
+        python_callable=select_random
     )
+
     select_task2 = PythonOperator(
         task_id="select_task2",
-        python_callable=select_random()
+        python_callable=select_random
     )
+
     select_task3 = PythonOperator(
         task_id="select_task3",
-        python_callable=select_random()
+        python_callable=select_random
     )
+    
     dummy_task = DummyOperator(
         task_id='dummy'
     )

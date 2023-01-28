@@ -1,4 +1,5 @@
 #/bin/bash
+
 # this script will setup the environment and install all necessary components 
 
 # install/upgrade virtualenv
